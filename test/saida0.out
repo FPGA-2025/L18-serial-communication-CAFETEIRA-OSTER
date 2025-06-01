@@ -1,4 +1,4 @@
 VCD info: dumpfile saida.vcd opened for output.
 data_in=2a
-data_out=zz, parity_ok_n=z, ready=z
+data_out=7f, parity_ok_n=0, ready=0
 tb.v:53: $finish called at 26 (1s)

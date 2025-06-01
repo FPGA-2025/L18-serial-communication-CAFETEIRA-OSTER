@@ -37,7 +37,7 @@ Depois que os dados forem transmitidos, a linha deve ficar parada em nível alto
 > O bit a ser enviado primeiro é o menos significativo dos 7, e o bit de paridade é enviado por último.
 
 ## Execução da atividade
-
+sudo apt install gtkwave
 Siga o modelo de módulo já fornecido e utilize o testbench e scripts de execução para sua verificação. Em seguida, implemente o circuito de acordo com as especificações e, se necessário, crie outros testes para verificá-lo.
 
 Uma vez que estiver satisfeito com o seu código, execute o script de testes com `./run-all.sh`. Ele mostrará na tela `ERRO` em caso de falha ou `OK` em caso de sucesso.

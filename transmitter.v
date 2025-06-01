@@ -49,5 +49,4 @@ module transmitter (
             end
         end
     end
-
 endmodule
