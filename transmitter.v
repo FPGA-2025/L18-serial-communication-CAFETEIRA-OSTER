@@ -13,40 +13,32 @@ module transmitter (
 
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
-            serial_out <= 1'b1;
-            state <= S0;
+            serial_out = 1'b1;
+            state = S0;
+            n = 0;
+            paridade = 0;
         end else begin
-            paridade <= ^data_in[6:0];
-            if (start) begin
-                serial_out <= 0;
-                state <= S1;
-            end else begin
-                case(state)
-                    S0: begin
-                        serial_out = 1;
-                        n = 0;
+            case(state)
+                S0: begin
+                    serial_out <= 1;
+                    n = 0;
+                    if (start) begin
+                        paridade = ^data_in;
+                        state = S1;
+                        serial_out <= 0; //att
                     end
-                    S1: begin
-                        // Verifica se o LSB é 1
-                        if (n < 7) begin
-                            if (data_in[n] == 1'b1) begin
-                                serial_out = 1;           
-                            end else begin
-                                serial_out = 0;
-                            end
-                            n = n + 1;
-                        end else begin
-                            if (paridade) begin
-                                serial_out = 1;
-                            end else begin
-                                serial_out = 0;
-                            end
-                            state = S0;
-                        end
+                end
+                S1: begin
+                    if (n < 7) begin
+                        serial_out <= data_in[n];//att
+                        n = n + 1;
+                    end else begin
+                        serial_out <= paridade;//att
+                        state = S0;
                     end
-                    default: state <= S0;
-                endcase
-            end
+                end
+                default: state = S0;
+            endcase
         end
     end
 endmodule
