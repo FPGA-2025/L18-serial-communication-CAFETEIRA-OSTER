@@ -13,31 +13,31 @@ module transmitter (
 
     always @(posedge clk or negedge rstn) begin
         if (!rstn) begin
-            serial_out = 1'b1;
-            state = S0;
-            n = 0;
-            paridade = 0;
+            serial_out <= 1'b1;
+            state <= S0;
+            n <= 0;
+            paridade <= 0;
         end else begin
             case(state)
                 S0: begin
                     serial_out <= 1;
-                    n = 0;
+                    n <= 0;
                     if (start) begin
-                        paridade = ^data_in;
-                        state = S1;
-                        serial_out <= 0; //att
+                        paridade <= ^data_in;
+                        serial_out <= 0; // start bit
+                        state <= S1;
                     end
                 end
                 S1: begin
                     if (n < 7) begin
-                        serial_out <= data_in[n];//att
-                        n = n + 1;
+                        serial_out <= data_in[n];
+                        n <= n + 1;
                     end else begin
-                        serial_out <= paridade;//att
-                        state = S0;
+                        serial_out <= paridade;
+                        state <= S0;
                     end
                 end
-                default: state = S0;
+                default: state <= S0;
             endcase
         end
     end

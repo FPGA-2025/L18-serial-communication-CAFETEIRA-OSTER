@@ -34,14 +34,10 @@ module receiver (
                     end
                 end
                 S1: begin
-                    if (n < 7) begin
-                        if (serial_in) begin
-                            receptor[6:0] = (receptor[6:0] << 1) | 1'b1;
-                            n = n + 1;
-                        end else begin
-                            receptor[6:0] = receptor[6:0] << 1 | 1'b0;
-                            n = n + 1;
-                        end
+                    if (n < 7) begin 
+                        // receptor[6:0] = (receptor[6:0] << 1) | serial_in;
+                        receptor[6:0] = (receptor[6:0] >> 1) | (serial_in << 6);
+                        n = n + 1;
                     end else begin
                         ready_reg = 1;
                         paridade = ^receptor[6:0];
